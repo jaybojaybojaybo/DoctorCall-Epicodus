@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Doctor Call</title>
+  </head>
+  <body>
+    <div class="w3-container" id="forms">
+      <h1>Doctor Call</h1>
+      <div class="w3-container">
+        <form class="searchByAilment" method="post">
+          <label for="ailment">What's wrong?</label>
+          <input type="text" name="ailment" id="ailment" placeholder="Enter your ailment">
+          <button type="submit" id="ailment-button" name="ailment-button"><span class="glyphicon glyphicon-search">Search</span></button>
+        </form>
+        <form class="searchByDoctor" method="post">
+          <label for="doctor">Who you gonna call?</label>
+          <input type="text" name="doctor" id="doctor" placeholder="Enter the Doctor's name">
+          <button type="button" id="doctor-button" name="doctor-button"><span class="glyphicon glyphicon-search">Search</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="w3-container" id="results">
+    </div>
+  </body>
+</html>

@@ -1,26 +1,60 @@
-import * as THREE from 'three';
-import $ from 'jquery';
-import 'bootstrap';
-import './styles.css';
+// import * as THREE from 'three';
 // import 'three-examples/controls/OrbitControls';
+import $ from 'jquery';
+import './styles.css';
 import { AilmentCall } from "./js/ailmentCall.js";
 import { DoctorCall } from "./js/doctorCall.js";
 
 $(document).ready(function() {
   // threeDee();
 
-  $("#ailment-button").click(function(){
-    let ailment = $("#ailment").val()
+  $("#ailment-button").click(function(event){
+    event.preventDefault();
+    let ailment = $("#ailment").val();
+    $("#ailment").val("");
     let newAilmentCall = new AilmentCall;
     let promise = newAilmentCall.getDoctors(ailment);
     promise.then(
       function(response) {
       let sickList = JSON.parse(response)
-      console.log(sickList)
-      $("#results").text("There are results")
+      console.log(sickList.data)
+      // console.log(Object.keys(sickList.data).length);
+      for(let i = 0; i < Object.keys(sickList.data).length ; i++) {
+        $("#results").append(
+          "<div class='w3-container doctorResult w3-row' id='" + i + "'>" +
+            "<div class='w3-half photo'>" +
+              "<span>" +
+                "<img src='" + sickList.data[i].profile.image_url + "'>" +
+              "</span>" +
+            "</div>" +
+            "<div class='w3-half info'>" +
+              "<li>" +
+                sickList.data[i].profile.first_name + " " +
+                sickList.data[i].profile.last_name + " " +
+                sickList.data[i].profile.title +
+              "</li>" +
+              "<li>" +
+                sickList.data[i].practices[0].visit_address.street +
+              "</li>" +
+              "<li>" +
+                sickList.data[i].practices[0].visit_address.city + "," +
+                sickList.data[i].practices[0].visit_address.state + " " +
+                sickList.data[i].practices[0].visit_address.zip +
+              "</li>" +
+              "<li>" +
+                sickList.data[i].practices[0].phones[0].number +
+              "</li>" +
+              "<li>Accepts New Patients: " +
+                sickList.data[i].practices[0].accepts_new_patients +
+              "</li>" +
+            "</div>" +
+          "</div>" +
+          "<br>"
+        )
+      }
       },
       function(error) {
-      $("#results").text(`There was an error with your request : ${error.message}`)
+      $("#results").text(`No results found. Error Message: ${error.message}`)
       }
     )
   })

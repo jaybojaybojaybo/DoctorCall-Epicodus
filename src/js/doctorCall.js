@@ -11,6 +11,7 @@ export class DoctorCall{
           resolve(request.response)
         } else {
           reject(Error(request.statusText))
+          console.log(Error.message);
         }
       }
       request.open("GET", url, true)
